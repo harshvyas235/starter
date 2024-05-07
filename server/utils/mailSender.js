@@ -16,11 +16,13 @@ const mailSender= async(email,title,body)=>{
             subject: `${title}`,
             html: `${body}`,
         })
+        console.log("mail send ho gya info dekho")
         console.log(info);
         return info;
 
     }
     catch(err){
+        console.log("error in mail sending ")
         console.log(err.message);
     }
 }
