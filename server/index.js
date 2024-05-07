@@ -21,10 +21,10 @@ app.use(cookieParser()); // Parse cookies
 // Enable CORS
 app.use(
     cors({
-        origin: "https://starter-1.onrender.com", // Allow requests from this origin
-        credentials: true, // Allow credentials (e.g., cookies, authorization headers)
+        origin:"http://localhost:3000",
+        credentials:true,
     })
-);
+)
 
 // Routes
 const userRoute = require("./routes/UserApi");
