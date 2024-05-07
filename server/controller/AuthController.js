@@ -171,7 +171,7 @@ exports.login = async (req, res) => {
 
 exports.getUser = async(req,res)=>{
     try{
-        const {email}= res.body
+        const {email}= req.body
         
         const userData = await User.findOne({email:email})
 
