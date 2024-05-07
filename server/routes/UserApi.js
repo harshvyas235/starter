@@ -1,6 +1,6 @@
 // Import the required modules
 const express = require("express")
-const { login, signUp, optGen } = require("../controller/AuthController")
+const { login, signUp, optGen, getUser } = require("../controller/AuthController")
 // const { login, signUp, optGen} = require("../controller/AuthController")
 
 const router = express.Router()
@@ -20,6 +20,7 @@ router.post("/signup", signUp)
 
 // Route for sending OTP to the user's email
 router.post("/sendotp", optGen)
+router.get("/getdata",getUser)
 
 
 module.exports = router

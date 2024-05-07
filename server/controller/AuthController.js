@@ -168,3 +168,31 @@ exports.login = async (req, res) => {
         });
     }
 };
+
+exports.getUser = async(req,res)=>{
+    try{
+        const {email}= res.body
+        
+        const userData = await User.findOne({email:email})
+
+        if(userData===null){
+            return res.status(404).json({
+                success:false,
+                message: "user is not found",
+            })
+        }
+
+        return res.status(200).json({
+            success:true,
+            userData
+        })
+    }
+    catch (err) {
+        console.error("Error in user data:", err.message);
+        res.status(500).json({
+            success: false,
+            message: "Error occurred during get.",
+            error: err.message
+        });
+    }
+}

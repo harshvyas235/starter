@@ -7,7 +7,7 @@ export const LoginData = (email, password, navigate) => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await apiconnector("Post", "http://localhost:4000/api/v1/auth/login", {
+      const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/login", {
         email,
         password
       });
@@ -23,8 +23,8 @@ export const LoginData = (email, password, navigate) => {
       localStorage.setItem("token", JSON.stringify(response.data.token));
       navigate('/');
     } catch (err) {
-      console.log("LOGIN API ERROR............", err.message);
-      toast.error("Login Failed");
+      console.log("LOGIN API ERROR............", err);
+      toast.error(err.response.data.message);
     } finally {
       dispatch(setLoading(false)); // Moved inside finally block
     }
@@ -34,7 +34,7 @@ export const LoginData = (email, password, navigate) => {
 export const OtpCall = (email, navigate) => {
   return async (dispatch) => {
     try {
-      const response = await apiconnector("Post", "http://localhost:4000/api/v1/auth/sendotp", {
+      const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/sendotp", {
         email
       });
 
@@ -56,7 +56,7 @@ export const Signup_Call = (confirmPassword, email, firstName, lastName, passwor
       try {
         dispatch(setLoading(true));
         
-        const response = await apiconnector("Post", "http://localhost:4000/api/v1/auth/signup", {
+        const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/signup", {
           confirmPassword,
           email,
           firstName,
