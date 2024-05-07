@@ -1,40 +1,36 @@
-const express = require("express")
-const app = express()
-app.use(express.json());
+const express = require("express");
+const app = express();
+const database = require("./config/database");
+const cookieParser = require("cookie-parser");
+const dotenv = require("dotenv");
+const cors = require("cors");
 
-
-// const shopingRoute = require("./routes/shopping")
-const database = require("./config/database")
-const cookieParser = require("cookie-parser")
-const dotenv = require("dotenv")
-const cors = require("cors")
-
-
+// Load environment variables from .env file
 dotenv.config();
-const Port = process.env.PORT || 4000
-database.connect();
-app.use(express.json());
 
-app.use(cookieParser());
+// Set the port for the server
+const Port = process.env.PORT || 4000;
+
+// Connect to the database
+database.connect();
+
+// Middleware
+app.use(express.json()); // Parse JSON bodies
+app.use(cookieParser()); // Parse cookies
+
+// Enable CORS
 app.use(
     cors({
-        origin:"https://starter-1.onrender.com",
-        credentials:true,
+        origin: "https://starter-1.onrender.com", // Allow requests from this origin
+        credentials: true, // Allow credentials (e.g., cookies, authorization headers)
     })
-)
+);
 
-const userRoute = require("./routes/UserApi")
+// Routes
+const userRoute = require("./routes/UserApi");
 app.use("/api/v1/auth", userRoute);
 
-
-
-
-
-
-
-
-
-
-app.listen(Port,()=>{
-    console.log(`App is runing at ${Port}`)
-})
+// Start the server
+app.listen(Port, () => {
+    console.log(`App is running at ${Port}`);
+});
