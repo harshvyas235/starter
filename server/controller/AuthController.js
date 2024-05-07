@@ -173,7 +173,7 @@ exports.getUser = async(req,res)=>{
     try{
         const {email}= req.body
         
-        const userData = await User.findOne({email:email})
+        const userData = await User.findOne({email:"harshvyas235@gmail.com"})
 
         if(userData===null){
             return res.status(404).json({
