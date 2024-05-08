@@ -2,6 +2,7 @@ import { toast } from "react-hot-toast";
 import { setLoading, setToken } from "../../../redux/Slices/authSlice";
 import { apiconnector } from '../appiconnector';
 import { RiAwardFill } from 'react-icons/ri';
+// https://starter-1.onrender.com/api/v1/auth/login
 
 export const LoginData = (email, password, navigate) => {
   return async (dispatch) => {
