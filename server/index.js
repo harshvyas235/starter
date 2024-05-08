@@ -19,12 +19,14 @@ app.use(express.json()); // Parse JSON bodies
 app.use(cookieParser()); // Parse cookies
 
 // Enable CORS
+// Enable CORS
 app.use(
     cors({
-        origin: "https://starter-1.onrender.com", // Allow requests from this origin
+        origin: "https://starter-m3fz-5jtsh9nvp-harsh-vyas-projects-f916651a.vercel.app", // Allow requests from this origin
         credentials: true, // Allow credentials (e.g., cookies, authorization headers)
     })
-)
+);
+
 
 // Routes
 const userRoute = require("./routes/UserApi");
