@@ -21,11 +21,8 @@ app.use(cookieParser()); // Parse cookies
 // Enable CORS
 app.use(
     cors({
-        origin: 'https://starter-m3fz.vercel.app',
-
-
-        
-
+        origin: "https://starter-1.onrender.com", // Allow requests from this origin
+        credentials: true, // Allow credentials (e.g., cookies, authorization headers)
     })
 )
 
