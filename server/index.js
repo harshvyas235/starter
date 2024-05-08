@@ -21,7 +21,7 @@ app.use(cookieParser()); // Parse cookies
 // Enable CORS
 app.use(
     cors({
-        origin: 'https://starter-qody-c36tj3xvn-harsh-vyas-projects-f916651a.vercel.app',
+        origin: 'https://starter-two-ruby.vercel.app/',
 
         
 
