@@ -17,20 +17,13 @@ database.connect();
 // Middleware
 app.use(express.json()); // Parse JSON bodies
 app.use(cookieParser()); // Parse cookies
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    next();
-  });
 
 // Enable CORS
-
 app.use(
     cors({
-        origin:"https://starter-two-ruby.vercel.app/",
+        origin:"http://localhost:3000",
         methods:["POST","GET"],
         credentials:true,
-        allowedHeaders: ["Content-Type", "Authorization"],
-        debug: true, // Enable debug mode
     })
 )
 
