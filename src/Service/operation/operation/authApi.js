@@ -48,7 +48,7 @@ export const OtpCall = (email, navigate) => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const response = await apiconnector("Post", "http://localhost:4000/api/v1/auth/sendotp", {
+      const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/sendotp", {
         email
       });
 
@@ -71,7 +71,7 @@ export const Signup_Call = (confirmPassword, email, firstName, lastName, passwor
       try {
         dispatch(setLoading(true));
         
-        const response = await apiconnector("Post", "http://localhost:4000/api/v1/auth/signup", {
+        const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/signup", {
           confirmPassword,
           email,
           firstName,
@@ -122,7 +122,7 @@ export const Signup_Call = (confirmPassword, email, firstName, lastName, passwor
      dispatch(setLoading(true))
      try{
  
-        const response = await apiconnector("POST","http://localhost:4000/api/v1/auth/reset-password-token",{email});
+        const response = await apiconnector("POST","https://starter-1.onrender.com/api/v1/auth/reset-password-token",{email});
         console.log("response dekh le",response)
        //   console.log("jkfhshfskhffsfhashdjhs")
         if(response.data.success==false){
@@ -145,7 +145,7 @@ export const Signup_Call = (confirmPassword, email, firstName, lastName, passwor
  export const UpdatePasswordChange=(password, confirmPassword, token,navigate)=>{
   return async(dispatch)=>{
      try{
-         const response= await apiconnector("POST","http://localhost:4000/api/v1/auth/reset-password",{
+         const response= await apiconnector("POST","https://starter-1.onrender.com/api/v1/auth/reset-password",{
            password, confirmPassword, token
          })
 
