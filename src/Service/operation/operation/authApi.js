@@ -11,7 +11,7 @@ export const LoginData = (email, password, navigate) => {
 
     dispatch(setLoading(true));
     try {
-      const response = await apiconnector("Post", "http://localhost:4000/api/v1/auth/login", {
+      const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/login", {
         email,
         password
       });

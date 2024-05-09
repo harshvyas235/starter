@@ -21,7 +21,8 @@ app.use(cookieParser()); // Parse cookies
 // Enable CORS
 app.use(
     cors({
-        origin:"http://localhost:3000",
+        origin:"https://starter-m3fz.vercel.app/",
+        methods:["POST","GET"],
         credentials:true,
     })
 )
