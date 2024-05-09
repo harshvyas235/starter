@@ -21,7 +21,7 @@ app.use(cookieParser()); // Parse cookies
 // Enable CORS
 app.use(
     cors({
-        origin:"https://starter-m3fz.vercel.app/",
+        origin:"https://starter-two-ruby.vercel.app/",
         methods:["POST","GET"],
         credentials:true,
     })
