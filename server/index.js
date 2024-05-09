@@ -23,6 +23,7 @@ app.use((req, res, next) => {
   });
 
 // Enable CORS
+
 app.use(
     cors({
         origin:"https://starter-two-ruby.vercel.app/",

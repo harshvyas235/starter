@@ -1,168 +1,215 @@
-import { toast } from "react-hot-toast";
-import { setLoading, setToken } from "../../../redux/Slices/authSlice";
-import { apiconnector } from '../appiconnector';
-import { RiAwardFill } from 'react-icons/ri';
-import { dataUser, setUser } from "../../../redux/Slices/profileSlice";
-import { useSelector } from "react-redux";
+// import { toast } from "react-hot-toast";
+// import { setLoading, setToken } from "../../../redux/Slices/authSlice";
+// import { apiconnector } from '../appiconnector';
+// import { RiAwardFill } from 'react-icons/ri';
+// import { dataUser, setUser } from "../../../redux/Slices/profileSlice";
+// import { useSelector } from "react-redux";
 
-export const LoginData = (email, password, navigate) => {
-  return async (dispatch) => {
+// export const LoginData = (email, password, navigate) => {
+//   return async (dispatch) => {
     
 
-    dispatch(setLoading(true));
-    try {
-      const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/login", {
-        email,
-        password
-      });
+//     dispatch(setLoading(true));
+//     try {
+//       const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/login", {
+//         email,
+//         password
+//       });
 
-      console.log("login ka response dekh lo ...", response);
+//       console.log("login ka response dekh lo ...", response);
 
-      if (response.data && response.data.success === false) {
-        throw new Error("error message h ye login k andr", response.data.message);
-      }
+//       if (response.data && response.data.success === false) {
+//         throw new Error("error message h ye login k andr", response.data.message);
+//       }
 
-      toast.success("login successFull");
-      dispatch(setToken(response.data.token));
-      const userImage = `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
-      dispatch(setUser({...response.data.user, image:userImage}))
-      localStorage.setItem("token", JSON.stringify(response.data.token));
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-     // Initialize a value in local storage with null
-localStorage.setItem("cart", JSON.stringify(null));
+//       toast.success("login successFull");
+//       dispatch(setToken(response.data.token));
+//       const userImage = `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
+//       dispatch(setUser({...response.data.user, image:userImage}))
+//       localStorage.setItem("token", JSON.stringify(response.data.token));
+//       localStorage.setItem("user", JSON.stringify(response.data.user));
+//      // Initialize a value in local storage with null
+// localStorage.setItem("cart", JSON.stringify(null));
 
-      console.log("user dekh")
-      dispatch(dataUser())
+//       console.log("user dekh")
+//       dispatch(dataUser())
      
-      navigate('/');
-    } catch (err) {
-      console.log("LOGIN API ERROR............", err);
-      toast.error(err.response.data.message);
-    } finally {
-      dispatch(setLoading(false)); // Moved inside finally block
-    }
-  };
-};
+//       navigate('/');
+//     } catch (err) {
+//       console.log("LOGIN API ERROR............", err);
+//       toast.error(err.response.data.message);
+//     } finally {
+//       dispatch(setLoading(false)); // Moved inside finally block
+//     }
+//   };
+// };
 
-export const OtpCall = (email, navigate) => {
-  return async (dispatch) => {
-    dispatch(setLoading(true));
-    try {
-      const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/sendotp", {
-        email
-      });
+// export const OtpCall = (email, navigate) => {
+//   return async (dispatch) => {
+//     dispatch(setLoading(true));
+//     try {
+//       const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/sendotp", {
+//         email
+//       });
 
-      console.log("otp request ka response ", response.data);
+//       console.log("otp request ka response ", response.data);
 
-      if (response.data && response.data.success === false) {
-        throw new Error("error message h ye otp req ka", response.data.message);
-      }
-      navigate('/otp-verification');
-    } catch (err) {
-      console.log("otp send API ERROR............", err);
-      toast.error("otp  Failed");
-    }
-    dispatch(setLoading(false));
-  };
-};
+//       if (response.data && response.data.success === false) {
+//         throw new Error("error message h ye otp req ka", response.data.message);
+//       }
+//       navigate('/otp-verification');
+//     } catch (err) {
+//       console.log("otp send API ERROR............", err);
+//       toast.error("otp  Failed");
+//     }
+//     dispatch(setLoading(false));
+//   };
+// };
 
-export const Signup_Call = (confirmPassword, email, firstName, lastName, password, navigate, otp) => {
-    return async (dispatch) => {
-      try {
-        dispatch(setLoading(true));
+// export const Signup_Call = (confirmPassword, email, firstName, lastName, password, navigate, otp) => {
+//     return async (dispatch) => {
+//       try {
+//         dispatch(setLoading(true));
         
-        const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/signup", {
-          confirmPassword,
-          email,
-          firstName,
-          lastName,
-          password,
-          otp
-        });
+//         const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/signup", {
+//           confirmPassword,
+//           email,
+//           firstName,
+//           lastName,
+//           password,
+//           otp
+//         });
   
-        if (response.data && response.data.success) {
-          toast.success("Signup successful. You can now login.");
-          navigate('/login');
-        } else {
-          throw new Error(response.data.message || "Signup failed. Please try again later.");
-        }
-      } catch (err) {
-        console.error("Signup API ERROR:", err.message);
-        toast.error("Signup failed. Please try again later.");
-      } finally {
-        dispatch(setLoading(false));
-      }
-    };
-  };
+//         if (response.data && response.data.success) {
+//           toast.success("Signup successful. You can now login.");
+//           navigate('/login');
+//         } else {
+//           throw new Error(response.data.message || "Signup failed. Please try again later.");
+//         }
+//       } catch (err) {
+//         console.error("Signup API ERROR:", err.message);
+//         toast.error("Signup failed. Please try again later.");
+//       } finally {
+//         dispatch(setLoading(false));
+//       }
+//     };
+//   };
   
 
-  export function logout(navigate) {
-    return (dispatch) => {
-      dispatch(setLoading(true));
+//   export function logout(navigate) {
+//     return (dispatch) => {
+//       dispatch(setLoading(true));
 
-      dispatch(setToken(null))
-      dispatch(setUser(null))
-      // dispatch(resetCart())
-      localStorage.removeItem("token")
-      localStorage.removeItem("user")
-      localStorage.removeItem("cart")
-      toast.success("Logged Out")
-      window.location.reload();
+//       dispatch(setToken(null))
+//       dispatch(setUser(null))
+//       // dispatch(resetCart())
+//       localStorage.removeItem("token")
+//       localStorage.removeItem("user")
+//       localStorage.removeItem("cart")
+//       toast.success("Logged Out")
+//       window.location.reload();
 
-      navigate("/")
-      dispatch(setLoading(false));
+//       navigate("/")
+//       dispatch(setLoading(false));
 
-    }
-  }
+//     }
+//   }
 
 
-  export const getemail = (email,setemail)=>{
+//   export const getemail = (email,setemail)=>{
 
-    return async(dispatch)=>{
-     dispatch(setLoading(true))
-     try{
+//     return async(dispatch)=>{
+//      dispatch(setLoading(true))
+//      try{
  
-        const response = await apiconnector("POST","https://starter-1.onrender.com/api/v1/auth/reset-password-token",{email});
-        console.log("response dekh le",response)
-       //   console.log("jkfhshfskhffsfhashdjhs")
-        if(response.data.success==false){
-         throw new Error("error mesage h ye",response.data.message)
-        }
-        toast.success()
-        setemail(true);
+//         const response = await apiconnector("POST","https://starter-1.onrender.com/api/v1/auth/reset-password-token",{email});
+//         console.log("response dekh le",response)
+//        //   console.log("jkfhshfskhffsfhashdjhs")
+//         if(response.data.success==false){
+//          throw new Error("error mesage h ye",response.data.message)
+//         }
+//         toast.success()
+//         setemail(true);
          
  
-     }catch(err){
-         console.log(err)
-       toast.error("error aayi h ")
+//      }catch(err){
+//          console.log(err)
+//        toast.error("error aayi h ")
  
-     }
-     dispatch(setLoading(false))
-    }
- }
+//      }
+//      dispatch(setLoading(false))
+//     }
+//  }
  
 
- export const UpdatePasswordChange=(password, confirmPassword, token,navigate)=>{
-  return async(dispatch)=>{
-     try{
-         const response= await apiconnector("POST","https://starter-1.onrender.com/api/v1/auth/reset-password",{
-           password, confirmPassword, token
-         })
+//  export const UpdatePasswordChange=(password, confirmPassword, token,navigate)=>{
+//   return async(dispatch)=>{
+//      try{
+//          const response= await apiconnector("POST","https://starter-1.onrender.com/api/v1/auth/reset-password",{
+//            password, confirmPassword, token
+//          })
 
          
-         if(response.data && response.data.success==false){
-           throw new Error("error mesage h ye",response.data.message)
-          }
+//          if(response.data && response.data.success==false){
+//            throw new Error("error mesage h ye",response.data.message)
+//           }
 
-          toast.success("change successfully")
+//           toast.success("change successfully")
           
-          navigate('/login')
+//           navigate('/login')
 
-     }
-     catch(err){
-          toast.error(err.message)
-          console.log(err)
+//      }
+//      catch(err){
+//           toast.error(err.message)
+//           console.log(err)
 
-     }
-  }
-}
+//      }
+//   }
+// }
+
+const express = require("express");
+const app = express();
+const database = require("./config/database");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
+// Set the port for the server
+const Port = process.env.PORT || 4000;
+
+// Connect to the database
+database.connect();
+
+// Middleware
+app.use(express.json()); // Parse JSON bodies
+app.use(cookieParser()); // Parse cookies
+
+// Enable CORS
+app.use(
+    cors({
+        origin: "https://starter-two-ruby.vercel.app", // Set frontend origin directly
+        methods: ["POST", "GET"],
+        credentials: true,
+        allowedHeaders: ["Content-Type", "Authorization"],
+        debug: process.env.NODE_ENV === 'development', // Enable debug mode only in development environment
+    })
+);
+
+// Routes
+const userRoute = require("./routes/UserApi");
+app.use("/api/v1/auth", userRoute);
+
+// Error handling for CORS
+app.use((err, req, res, next) => {
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).json({ message: 'Unauthorized' });
+    } else if (err.name === 'NotFoundError') {
+        res.status(404).json({ message: 'Not Found' });
+    } else {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+// Start the server
+app.listen(Port, () => {
+    console.log(`App is running at ${Port}`);
+});
