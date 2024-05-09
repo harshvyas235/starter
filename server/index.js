@@ -19,14 +19,12 @@ app.use(express.json()); // Parse JSON bodies
 app.use(cookieParser()); // Parse cookies
 
 // Enable CORS
-// Enable CORS
 app.use(
     cors({
-        origin: "https://starter-m3fz-5jtsh9nvp-harsh-vyas-projects-f916651a.vercel.app", // Allow requests from this origin
-        credentials: true, // Allow credentials (e.g., cookies, authorization headers)
+        origin:"http://localhost:3000",
+        credentials:true,
     })
-);
-
+)
 
 // Routes
 const userRoute = require("./routes/UserApi");

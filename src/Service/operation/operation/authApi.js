@@ -2,13 +2,16 @@ import { toast } from "react-hot-toast";
 import { setLoading, setToken } from "../../../redux/Slices/authSlice";
 import { apiconnector } from '../appiconnector';
 import { RiAwardFill } from 'react-icons/ri';
-// https://starter-1.onrender.com/api/v1/auth/login
+import { dataUser, setUser } from "../../../redux/Slices/profileSlice";
+import { useSelector } from "react-redux";
 
 export const LoginData = (email, password, navigate) => {
   return async (dispatch) => {
+    
+
     dispatch(setLoading(true));
     try {
-      const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/login", {
+      const response = await apiconnector("Post", "http://localhost:4000/api/v1/auth/login", {
         email,
         password
       });
@@ -21,7 +24,16 @@ export const LoginData = (email, password, navigate) => {
 
       toast.success("login successFull");
       dispatch(setToken(response.data.token));
+      const userImage = `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
+      dispatch(setUser({...response.data.user, image:userImage}))
       localStorage.setItem("token", JSON.stringify(response.data.token));
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+     // Initialize a value in local storage with null
+localStorage.setItem("cart", JSON.stringify(null));
+
+      console.log("user dekh")
+      dispatch(dataUser())
+     
       navigate('/');
     } catch (err) {
       console.log("LOGIN API ERROR............", err);
@@ -34,8 +46,9 @@ export const LoginData = (email, password, navigate) => {
 
 export const OtpCall = (email, navigate) => {
   return async (dispatch) => {
+    dispatch(setLoading(true));
     try {
-      const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/sendotp", {
+      const response = await apiconnector("Post", "http://localhost:4000/api/v1/auth/sendotp", {
         email
       });
 
@@ -49,6 +62,7 @@ export const OtpCall = (email, navigate) => {
       console.log("otp send API ERROR............", err);
       toast.error("otp  Failed");
     }
+    dispatch(setLoading(false));
   };
 };
 
@@ -57,7 +71,7 @@ export const Signup_Call = (confirmPassword, email, firstName, lastName, passwor
       try {
         dispatch(setLoading(true));
         
-        const response = await apiconnector("Post", "https://starter-1.onrender.com/api/v1/auth/signup", {
+        const response = await apiconnector("Post", "http://localhost:4000/api/v1/auth/signup", {
           confirmPassword,
           email,
           firstName,
@@ -81,3 +95,74 @@ export const Signup_Call = (confirmPassword, email, firstName, lastName, passwor
     };
   };
   
+
+  export function logout(navigate) {
+    return (dispatch) => {
+      dispatch(setLoading(true));
+
+      dispatch(setToken(null))
+      dispatch(setUser(null))
+      // dispatch(resetCart())
+      localStorage.removeItem("token")
+      localStorage.removeItem("user")
+      localStorage.removeItem("cart")
+      toast.success("Logged Out")
+      window.location.reload();
+
+      navigate("/")
+      dispatch(setLoading(false));
+
+    }
+  }
+
+
+  export const getemail = (email,setemail)=>{
+
+    return async(dispatch)=>{
+     dispatch(setLoading(true))
+     try{
+ 
+        const response = await apiconnector("POST","http://localhost:4000/api/v1/auth/reset-password-token",{email});
+        console.log("response dekh le",response)
+       //   console.log("jkfhshfskhffsfhashdjhs")
+        if(response.data.success==false){
+         throw new Error("error mesage h ye",response.data.message)
+        }
+        toast.success()
+        setemail(true);
+         
+ 
+     }catch(err){
+         console.log(err)
+       toast.error("error aayi h ")
+ 
+     }
+     dispatch(setLoading(false))
+    }
+ }
+ 
+
+ export const UpdatePasswordChange=(password, confirmPassword, token,navigate)=>{
+  return async(dispatch)=>{
+     try{
+         const response= await apiconnector("POST","http://localhost:4000/api/v1/auth/reset-password",{
+           password, confirmPassword, token
+         })
+
+         
+         if(response.data && response.data.success==false){
+           throw new Error("error mesage h ye",response.data.message)
+          }
+
+          toast.success("change successfully")
+          
+          navigate('/login')
+
+     }
+     catch(err){
+          toast.error(err.message)
+          console.log(err)
+
+     }
+  }
+}

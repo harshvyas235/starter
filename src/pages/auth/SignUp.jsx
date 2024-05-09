@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { OtpCall } from '../../Service/operation/operation/authApi';
 // import { setUser } from '../../redux/Slices/profileSlice';
 import { setSignupData } from '../../redux/Slices/authSlice';
+import { Circles } from 'react-loader-spinner';
 
 
 const SignUp = () => {
@@ -24,6 +25,7 @@ const SignUp = () => {
   };
 
   const dispatch = useDispatch();
+  const{loading}= useSelector((state)=>state.auth)
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -40,7 +42,20 @@ const SignUp = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white  ">
-      <div className="max-w-md w-full space-y-8 bg-gray-900  p-8 rounded-md shadow-lg flex-col item-center mt-24 ">
+
+     {
+      loading ? (
+        <div ><div className='flex  items-center  justify-center h-screen'><Circles
+  height="80"
+  width="80"
+  color="#4fa94d"
+  ariaLabel="circles-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  visible={true}
+  /></div></div>
+      ):(
+        <div className="max-w-md w-full space-y-8 bg-gray-900  p-8 rounded-md shadow-lg flex-col item-center mt-24 ">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-200">Sign up for an account</h2>
         <form className="mt-8 space-y-6 " onSubmit={handleSubmit}>
           <input type="hidden" name="remember" defaultValue="true" />
@@ -127,6 +142,9 @@ const SignUp = () => {
           </div>
         </form>
       </div>
+      )}
+
+  
     </div>
   );
 };

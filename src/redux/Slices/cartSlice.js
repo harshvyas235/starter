@@ -1,37 +1,23 @@
-// import { createSlice } from "@reduxjs/toolkit";
-
-
-// export const CartSlice = createSlice({
-//     name:"cart",
-//     initialState:[],
-//     reducers:{
-//         add:(state,action) => {
-//             state.push(action.payload)
-//         },
-//         remove:(state,action) => {
-//             return state.filter((item)=> item.id != action.payload)
-//         },
-//     }
-// });
-
-// export const {add, remove} = CartSlice.actions;
-// export default CartSlice.reducer;
-
 import { createSlice } from "@reduxjs/toolkit";
-
+import { toast } from 'react-toastify';
 
 export const cartSlice = createSlice({
     name : "cart",
-    initialState : [],
+    initialState : JSON.parse(localStorage.getItem('cart')) || [], // Initialize cart state from local storage
     reducers: {
         add : (state,action)=>{
-            state.push(action.payload)
+            state.push(action.payload);
+            localStorage.setItem('cart', JSON.stringify(state)); // Update local storage with the new cart state
+            toast.success('Item added to cart successfully');
         },
         remove : (state,action)=>{
-            return state.filter( (item)=> item.id !== action.payload)
+            const updatedCart = state.filter( (item)=> item.id !== action.payload);
+            localStorage.setItem('cart', JSON.stringify(updatedCart)); // Update local storage with the updated cart state
+            toast.success('Item removed from cart successfully');
+            return updatedCart;
         },
     },
-})
+});
 
 export default cartSlice.reducer;
 export const {add,remove} = cartSlice.actions;

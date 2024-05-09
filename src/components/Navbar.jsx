@@ -48,13 +48,24 @@
 
 
 import { FaShoppingCart } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import  ProfileDropDown  from "../pages/auth/ProfileDropDown";
 
 const Navbar = () => {
   const { cart } = useSelector((state) => state);
   const {token}= useSelector((state)=>state.auth)
+  const  dispatch = useDispatch()
   // console.log("token dekh ",token)
+  const navigate = useNavigate()
+
+  const LogoutFunction = () => {
+    // Remove the token from local storage
+    localStorage.removeItem('token');
+  
+    // Refresh the page
+    window.location.reload();
+  };
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 bg-gray-900">
@@ -118,6 +129,8 @@ const Navbar = () => {
           </div>
             )
           }
+          
+          <ProfileDropDown/>
           
          
         </div>

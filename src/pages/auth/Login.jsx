@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LoginData } from '../../Service/operation/operation/authApi';
 import { useNavigate } from 'react-router-dom';
+import { Circles } from 'react-loader-spinner';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { loading } = useSelector((state) => state.auth)
+
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -19,6 +22,19 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
+    {
+      loading ? (
+        <div ><div className='flex  items-center  justify-center h-screen'><Circles
+  height="80"
+  width="80"
+  color="#4fa94d"
+  ariaLabel="circles-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  visible={true}
+  /></div></div>
+      ):(
+         
       <div className="max-w-md w-full space-y-8 bg-gray-900 text-white p-8 rounded-md shadow-lg">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold">Sign in to your account</h2>
@@ -83,6 +99,8 @@ const Login = () => {
           </div>
         </form>
       </div>
+      )}
+   
     </div>
   );
 };

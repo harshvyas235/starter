@@ -7,6 +7,8 @@ import { Home } from "./pages/Home";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import { OtpVerify } from "./pages/auth/OtpVerify";
+import { Resetpass } from "./pages/auth/Resetpass";
+import { UpdatePassword } from "./pages/auth/UpdatePassword";
 // import { VerifyEmail } from "./pages/auth/VerifyEmail";
 // import { VerifyEmail } from "./pages/auth/verifyEmail";
 
@@ -23,6 +25,9 @@ const App = () => {
       <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<SignUp/>}/>
+   <Route path="/forgot-password" element={<Resetpass/>}/>
+   <Route path="/update-password/:id" element={<UpdatePassword/>}/>
+
       <Route path ="/otp-verification" element={<OtpVerify/>}/>
 
 
