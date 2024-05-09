@@ -28,7 +28,8 @@ app.use(
         origin:"https://starter-two-ruby.vercel.app/",
         methods:["POST","GET"],
         credentials:true,
-        allowedHeaders: ["Content-Type", "Authorization"], // Add allowed headers if needed
+        allowedHeaders: ["Content-Type", "Authorization"],
+        debug: true, // Enable debug mode
     })
 )
 
